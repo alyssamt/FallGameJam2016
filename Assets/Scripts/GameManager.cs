@@ -13,12 +13,15 @@ public class GameManager : MonoBehaviour
     private GameObject levelImage;                          //Image to block out level as levels are being set up, background for levelText.
     private GameObject playAgainButton;
     private GameObject player;
-    private int level = 1;                                  //Current level number, expressed in game as "Day 1".
+    private int level = 1;
 
     private string[] levelProgression = {"", "", "RocketSpawner", "MCMove"};
     private RocketSpawner RocketSpawner;
     private MCMove MCMove;
 
+    GameObject scoreUITextGO; //SCORE - reference to the text UI game object
+    
+    
     //Awake is always called before any Start functions
     void Awake()
     {
@@ -47,6 +50,9 @@ public class GameManager : MonoBehaviour
 
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
+
+        //SCORE - get the score text UI
+        scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
 
         //Call the InitGame function to initialize the first level 
         InitGame();
@@ -110,6 +116,9 @@ public class GameManager : MonoBehaviour
     {
         if (doingSetup)
             return;
+        //SCORE - decrease score
+        if (scoreUITextGO.GetComponent<GameScore>().Score > 0)
+            scoreUITextGO.GetComponent<GameScore>().Score -= 1;
     }
 
 
@@ -117,13 +126,17 @@ public class GameManager : MonoBehaviour
     {
         levelText.text = "YOU CAN'T TOUCH THIS";
         levelImage.SetActive(true);
-        playAgainButton.SetActive(true);
+        playAgainButton.SetActive(true);    
         enabled = false;
     }
 
     public void PlayAgain()
     {
         level = 1;
+
+        //SCORE - reset score
+        scoreUITextGO.GetComponent<GameScore>().Score = 0;
+
         playAgainButton.SetActive(false);
         InitGame();
     }
