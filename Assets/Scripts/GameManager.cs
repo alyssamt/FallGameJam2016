@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private int level = 1;                                  //Current level number, expressed in game as "Day 1".
 
-
+    private string[] levelProgression = {"", "", "RocketSpawner", "MCMove"};
+    private RocketSpawner RocketSpawner;
+    private MCMove MCMove;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -36,14 +38,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         player = GameObject.Find("Player");
-
-        //Get a reference to our image LevelImage by finding it by name.
         levelImage = GameObject.Find("LevelImage");
-
-        //Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
-
         playAgainButton = GameObject.Find("PlayAgainButton");
+
+        RocketSpawner = GameObject.Find("RocketSpawner").GetComponent<RocketSpawner>();
+        MCMove = GameObject.Find("MC Hammer").GetComponent<MCMove>();
 
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
@@ -64,20 +64,34 @@ public class GameManager : MonoBehaviour
     //Initializes the game for each level.
     void InitGame()
     {
-        //While doingSetup is true the player can't move, prevent player from moving while title card is up.
         doingSetup = true;
-
         player.transform.position = new Vector3(0, -3, 0);
-
-        //Set the text of levelText to the string "Day" and append the current level number.
+        InitObstacles();
         levelText.text = "Level " + level;
-
-        //Set levelImage to active blocking player's view of the game board during setup.
         levelImage.SetActive(true);
-
-        //Call the HideLevelImage function with a delay in seconds of levelStartDelay.
         Invoke("HideLevelImage", levelStartDelay);
 
+    }
+
+
+    void InitObstacles()
+    {
+        if (level >= levelProgression.Length)
+        {
+            return;
+        }
+
+        string currObstacle = levelProgression[level];
+
+        if (currObstacle == "RocketSpawner")
+        {
+            RocketSpawner.BeginSpawning();
+        } else if (currObstacle == "MCMove")
+        {
+            MCMove.active = true;
+        }
+
+        RocketSpawner.IncreaseSpawnRate();
     }
 
 
@@ -99,17 +113,11 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //GameOver is called when the player reaches 0 food points
     public void GameOver()
     {
-        //Set levelText to display number of levels passed and game over message
         levelText.text = "YOU CAN'T TOUCH THIS";
-
-        //Enable black background image gameObject.
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);
-
-        //Disable this GameManager.
         enabled = false;
     }
 

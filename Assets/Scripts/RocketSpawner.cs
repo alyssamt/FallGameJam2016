@@ -5,18 +5,26 @@ public class RocketSpawner : MonoBehaviour {
 
     public GameObject RocketGO; //this is our enemy prefab
     public float maxSpawnRateInSeconds = 5f;
+
 	// Use this for initialization
 	void Start () {
-        Invoke("SpawnEnemy", maxSpawnRateInSeconds);
 
-        //increase spawn rate every 30 seconds
-        InvokeRepeating("IncreaseSpawnRate", 0f, 30f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+
+    public void BeginSpawning()
+    {
+        Invoke("SpawnEnemy", 0);
+
+        //increase spawn rate every 30 seconds
+        //InvokeRepeating("IncreaseSpawnRate", 0f, 30f);
+    }
+
 
     //function to spawn an enemy
     void SpawnEnemy()
@@ -37,6 +45,7 @@ public class RocketSpawner : MonoBehaviour {
 
     void ScheduleNextEnemySpawn()
     {
+        /*
         float spawnInNSeconds;
 
         if (maxSpawnRateInSeconds > 1f)
@@ -47,12 +56,14 @@ public class RocketSpawner : MonoBehaviour {
         }
         else
             spawnInNSeconds = 1f;
+            */
 
-        Invoke("SpawnEnemy", spawnInNSeconds);
+        Invoke("SpawnEnemy", Random.Range(1f, maxSpawnRateInSeconds));
     }
 
     //function to increase the difficulty of the game
-    void IncreaseSpawnRate()
+    //called from GameManager each level
+    public void IncreaseSpawnRate()
     {
         if (maxSpawnRateInSeconds > 1f)
             maxSpawnRateInSeconds--;
