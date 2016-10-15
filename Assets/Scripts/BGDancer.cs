@@ -24,6 +24,9 @@ public class BGDancer : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        gm.GameOver();
+        if(coll.collider.name == "Player")
+        {
+            gm.GameOver();
+        }
     }
 }
