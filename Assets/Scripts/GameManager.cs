@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour
     public float levelStartDelay = 2f;                      //Time to wait before starting level, in seconds.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
     public bool doingSetup = true;
+    public int level = 1;
 
     private Text levelText;                                 //Text to display current level number.
     private GameObject levelImage;                          //Image to block out level as levels are being set up, background for levelText.
     private GameObject playAgainButton;
     private GameObject player;
-    private int level = 1;
 
     private string[] levelProgression = {"", "", "RocketSpawner", "MCMove"};
     private RocketSpawner RocketSpawner;
