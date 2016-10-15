@@ -3,7 +3,6 @@ using System.Collections;
 
 public class BGDancer : MonoBehaviour
 {
-
     public Transform center;
     public float degreesPerSecond = -65.0f;
 
