@@ -31,11 +31,11 @@ public class MCHammer : MonoBehaviour {
 
         //add calculated points to the score
         scoreUITextGO.GetComponent<GameScore>().Score += (int) (winScore * Mathf.Pow(scoreRate, gm.level));
-        Debug.Log(winScore);
-        Debug.Log(scoreRate);
-        Debug.Log(gm.level);
-        Debug.Log(Mathf.Pow(scoreRate, gm.level));
-        Debug.Log((int)(winScore * Mathf.Pow(scoreRate, gm.level)));
+        //Debug.Log(winScore);
+        //Debug.Log(scoreRate);
+        //Debug.Log(gm.level);
+        //Debug.Log(Mathf.Pow(scoreRate, gm.level));
+        //Debug.Log((int)(winScore * Mathf.Pow(scoreRate, gm.level)));
         gm.OnLevelWasLoaded();
     }
 }
