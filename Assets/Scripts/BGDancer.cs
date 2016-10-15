@@ -5,6 +5,7 @@ public class BGDancer : MonoBehaviour
 {
     public Transform center;
     public float degreesPerSecond = -65.0f;
+    public GameManager gm;
 
     private Vector3 v;
 
@@ -23,6 +24,6 @@ public class BGDancer : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        Debug.Log("YOU LOSE");
+        gm.GameOver();
     }
 }
