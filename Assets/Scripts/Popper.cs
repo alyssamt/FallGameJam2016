@@ -4,13 +4,14 @@ using System.Collections;
 public class Popper : MonoBehaviour {
 
     public GameObject confetti;
-    public Transform confSpawn;
+    public bool left;
 
     // Use this for initialization
     void Start () {
         for (int i = 0; i < 5; i++)
         {
-            GameObject newConf = (GameObject) Instantiate(confetti, confSpawn.position, Quaternion.identity);
+            GameObject newConf = (GameObject) Instantiate(confetti, this.transform.position, Quaternion.identity);
+            newConf.GetComponent<Confetti>().left = this.left;
         }
 	}
 	

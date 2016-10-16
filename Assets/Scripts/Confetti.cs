@@ -2,10 +2,20 @@
 using System.Collections;
 
 public class Confetti : MonoBehaviour {
+    public bool left;
 
     // Use this for initialization
     void Start () {
-        Vector3 direction = new Vector3(1.0f, Random.Range(3.0f, 6.0f), 0);
+        Vector2 direction;
+
+        if (left)
+        {
+            direction = new Vector2(1.0f, Random.Range(3.0f, 6.0f));
+        } else
+        {
+            direction = new Vector2(-1.0f, Random.Range(3.0f, 6.0f));
+        }
+
         this.GetComponent<Rigidbody2D>().AddForce(direction * 100f);
     }
 	

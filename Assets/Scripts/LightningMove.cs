@@ -37,7 +37,7 @@ public class LightningMove : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.name == "Player" && gameObject.name == "lightning_bolt(Clone)")
+        if (coll.collider.name == "Player" && gameObject.name == "yellow_lightning(Clone)")
         {
             print(gameObject.name);
             Destroy(gameObject);
