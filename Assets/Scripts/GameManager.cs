@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;       //Allows us to use Lists. 
 using UnityEngine.UI;                   //Allows us to use UI.
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public float levelStartDelay = 1f;                      //Time to wait before starting level, in seconds.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
     public bool doingSetup = true;
-    public int level = 1;
+    public int level;
 
     private Text levelText;                                 //Text to display current level number.
     private GameObject levelImage;                          //Image to block out level as levels are being set up, background for levelText.
@@ -16,7 +17,8 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private GameObject mcHammer;
 
-    private string[] levelProgression = {"", "", "MCMove", "HammerSpawner", "PopperSpawner", "RocketSpawner"};
+    private string[] levelProgression = {"", "BG Spawner", "MCMove", "HammerSpawner", "PopperSpawner", "RocketSpawner"};
+    private CreateDancer DancerSpawner;
     private HammerSpawn HammerSpawner;
     private PopperSpawner PopperSpawner;
     private RocketSpawner RocketSpawner;
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
     //Awake is always called before any Start functions
     void Awake()
     {
+        Debug.Log("Awake called");
         //Check if instance already exists
         if (instance == null)
 
@@ -50,13 +53,13 @@ public class GameManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-            
         player = GameObject.Find("Player");
         mcHammer = GameObject.Find("MC Hammer");
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         playAgainButton = GameObject.Find("PlayAgainButton");
 
+        DancerSpawner = GameObject.Find("BG Spawner").GetComponent<CreateDancer>();
         HammerSpawner = GameObject.Find("HammerSpawner").GetComponent<HammerSpawn>();
         PopperSpawner = GameObject.Find("Popper Spawner").GetComponent<PopperSpawner>();
         RocketSpawner = GameObject.Find("RocketSpawner").GetComponent<RocketSpawner>();
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
 
-        //Call the InitGame function to initialize the first level 
+        level = 1;
         InitGame();
     }
 
@@ -152,6 +155,9 @@ public class GameManager : MonoBehaviour
         {
             //PopperSpawner.active = true;
             PopperSpawner.enabled = true;
+        } else if (currObstacle == "BG Spawner")
+        {
+            DancerSpawner.Spawn();
         }
 
         RocketSpawner.IncreaseSpawnRate();
@@ -183,6 +189,7 @@ public class GameManager : MonoBehaviour
     {
         DisableAll();
         DestroyAllObstacles();
+        DestroyDancers();
         levelText.text = "YOU CAN'T TOUCH THIS";
 
         /*
@@ -214,13 +221,14 @@ public class GameManager : MonoBehaviour
         //enabled = false;//WHYYYYY!!!!!!!!
     }
 
+
     public void PlayAgain()
     {
+        mcHammer.GetComponent<MCMove>().Reset();
+        player.GetComponent<PlayerMovement>().Reset();
+        DisableAll();
         level = 1;
-
-        //SCORE - reset score
         scoreUITextGO.GetComponent<GameScore>().Score = 0;
-
         playAgainButton.SetActive(false);
         InitGame();
     }
@@ -243,6 +251,11 @@ public class GameManager : MonoBehaviour
         RocketSpawner.active = false;
         DestroyAllObstacles(); breaking stuff
         */
+
+        MCMove.enabled = false;
+        HammerSpawner.enabled = false;
+        PopperSpawner.enabled = false;
+        RocketSpawner.enabled = false;
 
         foreach(GameObject moving in GameObject.FindGameObjectsWithTag("Obstacle")) {
             BGDancer movementDancer = moving.GetComponent<BGDancer>();
@@ -284,6 +297,20 @@ public class GameManager : MonoBehaviour
         for (var i = 0; i < gameObjects.Length; i++)
         {
             if (gameObjects[i].name != "BG Dancer(Clone)")
+            {
+                Destroy(gameObjects[i]);
+            }
+        }
+    }
+
+    
+    public void DestroyDancers()
+    {
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Obstacle");
+
+        for (var i = 0; i < gameObjects.Length; i++)
+        {
+            if (gameObjects[i].name == "BG Dancer(Clone)")
             {
                 Destroy(gameObjects[i]);
             }

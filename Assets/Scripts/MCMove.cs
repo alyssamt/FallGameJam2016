@@ -28,4 +28,9 @@ public class MCMove : MonoBehaviour
     {
         timeOffset = -Time.time;
     }
+
+    public void Reset()
+    {
+        transform.position = new Vector2(0, 2.5f);
+    }
 }

@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Reset();
     }
 
     /*void Update()
@@ -36,6 +37,13 @@ public class PlayerMovement : MonoBehaviour
 
 		}
 	}
+
+
+    public void Reset()
+    {
+        transform.position = new Vector2(0, -3);
+    }
+
 
 	void LoadLevel()
 	{
