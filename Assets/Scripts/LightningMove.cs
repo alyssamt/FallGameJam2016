@@ -3,8 +3,10 @@ using System.Collections;
 
 public class LightningMove : MonoBehaviour
 {
-
     public float speed;//for the enemy speed
+    public GameManager gm;
+
+    private Vector2 position;
 
     // Use this for initialization
     void Start()
@@ -16,7 +18,7 @@ public class LightningMove : MonoBehaviour
     void Update()
     {
         //Get the enemy current position
-        Vector2 position = transform.position;
+        position = transform.position;
 
         //Compute the enemy new position
         position = new Vector2(position.x, position.y - speed * Time.deltaTime);
@@ -30,6 +32,19 @@ public class LightningMove : MonoBehaviour
         //if the enemy went outside the screen on the bottom, then destroy the enemy
         if (transform.position.y < min.y)
         {
+            Destroy(gameObject);
+        }
+    }
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.collider.name == "Player" && gameObject.name == "yellow_lightning(Clone)")
+        {
+            print(gameObject.name);
+            Destroy(gameObject);
+        }
+        if(coll.collider.name == "Player" && gameObject.name == "red_lightning(Clone)")
+        {
+            print(gameObject.name);
             Destroy(gameObject);
         }
     }

@@ -2,63 +2,84 @@
 using System.Collections;
 
 public class HammerSpawn : MonoBehaviour {
-	public Transform center;
+
+    public GameManager gm;
+    public GameObject MCHammer;
 	public GameObject prefab;
-	public float maxSpawnRateInSeconds = 5f;
+
+    public bool active = false;
+    public float spawnRate = 1f;
+
+    private int i = 0;
 	
 	// Use this for initialization
 	void Start () {
-		Invoke("SpawnEnemy", maxSpawnRateInSeconds);
-		
-		//increase spawn rate every 30 seconds
-		InvokeRepeating("IncreaseSpawnRate", 0f, 30f);
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        MCHammer = GameObject.Find("MC Hammer");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position = center.position;
-	}
-	
-	//function to spawn an enemy
-	void SpawnEnemy()
-	{
-		//instantiate an enemy
-		GameObject anEnemy = (GameObject)Instantiate(prefab);
-		anEnemy.transform.position = new Vector2 (Random.Range (transform.position.x-1, transform.position.x+1), Random.Range (transform.position.y-1, transform.position.y+1));
-		anEnemy.GetComponent<Rigidbody2D> ().velocity = Random.insideUnitCircle * 4;
-		
-		//schedule when to spawn next enemy
-		ScheduleNextEnemySpawn();
-	}
-	
-	void ScheduleNextEnemySpawn()
-	{
-		float spawnInNSeconds;
-		
-		if (maxSpawnRateInSeconds > 1f)
-			//pick a number between 1 and maxSpawnRateInSeconds
-			spawnInNSeconds = Random.Range(1f, maxSpawnRateInSeconds);
-		
-		else
-			spawnInNSeconds = 1f;
-		
-		Invoke("SpawnEnemy", spawnInNSeconds);
-	}
-	
-	//function to increase the difficulty of the game
-	void IncreaseSpawnRate()
-	{
-		if (maxSpawnRateInSeconds > 1f)
-			maxSpawnRateInSeconds--;
-		
-		if (maxSpawnRateInSeconds == 1f)
-			CancelInvoke("IncreaseSpawnRate");
-	}
+        if (active && !gm.doingSetup)
+        {
+            spawnRate -= Time.deltaTime;
+            if (spawnRate <= 0)
+            {
+                SpawnEnemy();
+                spawnRate = 1f;
+            }
+        }
+    }
 
-	public void StopSpawn()
-	{
-		CancelInvoke ("SpawnEnemy");
-	}
+    //function to spawn an enemy
+    void SpawnEnemy()
+    {
+        float speed = Random.Range(30, 80);
 
+        //instantiate an enemy
+        GameObject anEnemy = (GameObject)Instantiate(prefab);
+        if (i != 9)
+        {
+            switch (i)
+            {
+                case 0:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y + 1);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 1) * speed);
+                    break;
+                case 1:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x, MCHammer.transform.position.y + 1);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1) * speed);
+                    break;
+                case 2:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y + 1);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 1) * speed);
+                    break;
+                case 3:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * speed);
+                    break;
+                case 4:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y-1);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, -1) * speed);
+                    break;
+                case 5:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x, MCHammer.transform.position.y - 1);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1) * speed);
+                    break;
+                case 6:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x-1, MCHammer.transform.position.y - 1);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, -1) * speed);
+                    break;
+                case 7:
+                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y);
+                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * speed);
+                    break;
+            }
+            i++;
+        } else
+        {
+            i = 0;
+        }
+    }
 }
 
