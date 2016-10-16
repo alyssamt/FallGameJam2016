@@ -7,7 +7,8 @@ public class PopperSpawner : MonoBehaviour {
     public GameObject confetti;
     public float spawnTime = 4.0f;
     public float destoryDelay = 2.0f;
-    public GameObject newPop;
+
+    private     GameObject newPop;
 
     // Use this for initialization
     void Start () {
