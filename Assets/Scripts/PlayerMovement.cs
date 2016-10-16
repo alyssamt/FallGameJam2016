@@ -37,12 +37,16 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	/*IEnumerator ExecuteAfterTime(float time)
+	void LoadLevel()
 	{
-		yield return new WaitForSeconds(time);
+		gm.OnLevelWasLoaded ();
+	}
 
-		// Code to execute after the delay
-	}*/
+	void FinishGame()
+	{
+		gm.GameOver ();
+	}
+		
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -52,14 +56,14 @@ public class PlayerMovement : MonoBehaviour
 
             if (collidedWith.name == "MC Hammer")
             {
-				//ExecuteAfterTime(3);
-                gm.OnLevelWasLoaded();
+				Invoke("LoadLevel",3);
+				this.GetComponent<PlayerMovement>().enabled = false;
             }
             else if (collidedWith.tag == "Obstacle")
             {
-				//ExecuteAfterTime(3);
                 Debug.Log("You collided with " + collidedWith.name);
-                gm.GameOver();
+				Invoke("FinishGame",3);
+				this.GetComponent<PlayerMovement>().enabled = false;
             }
         }
     }
