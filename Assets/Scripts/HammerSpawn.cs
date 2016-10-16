@@ -7,7 +7,7 @@ public class HammerSpawn : MonoBehaviour {
     public GameObject MCHammer;
 	public GameObject prefab;
 
-    public bool active = false;
+    //public bool active = false;
     public float spawnRate = 1f;
 
     private int i = 0;
@@ -16,11 +16,12 @@ public class HammerSpawn : MonoBehaviour {
 	void Start () {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         MCHammer = GameObject.Find("MC Hammer");
+        this.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (active && !gm.doingSetup)
+        if (this.enabled && !gm.doingSetup)
         {
             spawnRate -= Time.deltaTime;
             if (spawnRate <= 0)

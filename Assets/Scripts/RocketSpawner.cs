@@ -7,17 +7,18 @@ public class RocketSpawner : MonoBehaviour {
     public GameObject RocketGO; //this is our enemy prefab
     public float maxSpawnRateInSeconds = 5f;
     public float spawnRate = 1f;
-    public bool active;
+    //public bool active;
 
 	// Use this for initialization
 	void Start () {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        this.enabled = false;
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if (active && !gm.doingSetup)
+        if (this.enabled && !gm.doingSetup)
         {
             spawnRate -= Time.deltaTime;
             if (spawnRate <= 0)

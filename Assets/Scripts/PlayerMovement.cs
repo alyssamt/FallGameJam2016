@@ -47,11 +47,10 @@ public class PlayerMovement : MonoBehaviour
 		gm.GameOver();
 	}
 
-    private IEnumerator SecondsDelay()
+    IEnumerator SecondsDelay()
     {
-        this.GetComponent<PlayerMovement>().enabled = false;
-        yield return new WaitForSeconds(2);
-        this.GetComponent<PlayerMovement>().enabled = true;
+        yield return new WaitForSeconds(1);
+        GetComponent<PlayerMovement>().enabled = true;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -62,14 +61,18 @@ public class PlayerMovement : MonoBehaviour
 
             if (collidedWith.name == "MC Hammer")
             {
+                gm.RemoveTime();
+                GetComponent<PlayerMovement>().enabled = false;
+                Invoke("LoadLevel", 1f);
                 StartCoroutine(SecondsDelay());
-                Invoke("LoadLevel" ,1);
             }
             else if (collidedWith.tag == "Obstacle")
             {
                 Debug.Log("You collided with " + collidedWith.name);
-                StartCoroutine(SecondsDelay());
+                gm.RemoveTime();
+                GetComponent<PlayerMovement>().enabled = false;
                 Invoke("FinishGame", 1);
+                StartCoroutine(SecondsDelay());
             }
         }
     }
