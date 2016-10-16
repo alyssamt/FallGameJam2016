@@ -26,8 +26,9 @@ public class GameManager : MonoBehaviour
     public float scoreRate = 1.5f;
 
     GameObject scoreUITextGO; //SCORE - reference to the text UI game object
-    
-    
+    GameObject scoreUITextGO2; //SCORE - reference to the text UI game object
+    GameObject hiScoreUITextGO; //SCORE - reference to the text UI game object
+
     //Awake is always called before any Start functions
     void Awake()
     {
@@ -56,11 +57,16 @@ public class GameManager : MonoBehaviour
         RocketSpawner = GameObject.Find("RocketSpawner").GetComponent<RocketSpawner>();
         MCMove = GameObject.Find("MC Hammer").GetComponent<MCMove>();
 
+        //SCORE - get the score text UI
+        scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+        scoreUITextGO2 = GameObject.FindGameObjectWithTag("ScoreText2Tag");
+
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
 
-        //SCORE - get the score text UI
-        scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+        
+        
+        //hiScoreUITextGO = GameObject.FindGameObjectWithTag("HiScoreTextTag");
 
         //Call the InitGame function to initialize the first level 
         InitGame();
@@ -70,6 +76,7 @@ public class GameManager : MonoBehaviour
     public void OnLevelWasLoaded()
     {
         scoreUITextGO.GetComponent<GameScore>().Score += (int)(winScore * Mathf.Pow(scoreRate, level));
+        //scoreUITextGO2.GetComponent<GameScore>().Score = 1000;//scoreUITextGO.GetComponent<GameScore>().Score;//!!!!!
         level++;
         InitGame();
     }
@@ -141,6 +148,21 @@ public class GameManager : MonoBehaviour
     {
         DisableAll();
         levelText.text = "YOU CAN'T TOUCH THIS";
+        /*
+        scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
+
+        //if (PlayerPrefs.GetInt("HiScorePlayerPrefs") == null)
+        //    PlayerPrefs.SetInt("HiScorePlayerPrefs", scoreUITextGO2.GetComponent<GameScore>().Score);
+
+        hiScoreUITextGO.GetComponent<GameScore>().Score = PlayerPrefs.GetInt("HiScorePlayerPrefs");
+
+        if (hiScoreUITextGO.GetComponent<GameScore>().Score < scoreUITextGO2.GetComponent<GameScore>().Score)
+            hiScoreUITextGO.GetComponent<GameScore>().Score = scoreUITextGO2.GetComponent<GameScore>().Score;
+*/
+       
+
+
+
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);    
         enabled = false;
