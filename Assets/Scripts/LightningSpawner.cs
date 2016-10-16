@@ -5,8 +5,12 @@ public class LightningSpawner : MonoBehaviour
 {
 
     public GameObject lightning_bolt; //this is our object prefab
+    public GameObject red_lightning;
     public float maxSpawnRateInSeconds = 5f;
     public Transform center;
+    public GameManager gm;
+
+
     // Use this for initialization
     void Start()
     {
@@ -24,8 +28,8 @@ public class LightningSpawner : MonoBehaviour
     {
         
         //instantiate an enemy
-        //GameObject aBolt = (GameObject)Instantiate(lightning_bolt, center.position, Space.World);
-        //aBolt.GetComponent<BGDancer>().center = this.center;
+        GameObject aBolt = (GameObject)Instantiate(lightning_bolt);
+        aBolt.transform.position = center.transform.position;
 
         //schedule when to spawn next enemy
         ScheduleNextEnemySpawn();
@@ -46,6 +50,5 @@ public class LightningSpawner : MonoBehaviour
 
         Invoke("SpawnEnemy", spawnInNSeconds);
     }
-
 }
 
