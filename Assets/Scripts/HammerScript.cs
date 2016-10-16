@@ -18,7 +18,7 @@ public class HammerScript : MonoBehaviour {
 	}
 	
 		
-		// Update is called once per frame
+	// Update is called once per frame
 	void Update () {
 
 		Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
@@ -26,11 +26,11 @@ public class HammerScript : MonoBehaviour {
 
         //if the enemy went outside the screen on the bottom, then destroy the enemy
         
-        if (transform.position.y < min.y || transform.position.x < min.x || transform.position.y > max.y || transform.position.x > max.x)
+        /*if (transform.position.y < min.y || transform.position.x < min.x || transform.position.y > max.y || transform.position.x > max.x)
         {
             Debug.Log("Destroying hammer");
             Destroy(gameObject);
-        }
+        }*/
 
         //if the hammer is stuck inside MC Hammer and not moving, destroy the hammer
         if (GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
@@ -41,7 +41,7 @@ public class HammerScript : MonoBehaviour {
 	}
 			
 
-		/*
+	/*
 	void OnTriggerEnter2D (Collider2D coll)
 	{
 		if (coll.name == "Player") {
