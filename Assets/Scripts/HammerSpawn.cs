@@ -10,7 +10,7 @@ public class HammerSpawn : MonoBehaviour {
     //public bool active = false;
     public float spawnRate = 1f;
 
-    private int i = 0;
+    private int i;
 	
 	// Use this for initialization
 	void Start () {
@@ -39,8 +39,9 @@ public class HammerSpawn : MonoBehaviour {
 
         //instantiate an enemy
         GameObject anEnemy = (GameObject)Instantiate(prefab);
-        if (i != 9)
-        {
+
+        i = Random.Range(0, 7);
+        
             switch (i)
             {
                 case 0:
@@ -75,12 +76,9 @@ public class HammerSpawn : MonoBehaviour {
                     anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y);
                     anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * speed);
                     break;
+                
             }
-            i++;
-        } else
-        {
-            i = 0;
-        }
+        
     }
 }
 
