@@ -15,9 +15,14 @@ public class GameManager : MonoBehaviour
     private GameObject playAgainButton;
     private GameObject player;
 
-    private string[] levelProgression = {"", "", "RocketSpawner", "MCMove"};
+    private string[] levelProgression = {"", "", "MCMove", "HammerSpawner", "RocketSpawner"};
+    private HammerSpawn HammerSpawner;
     private RocketSpawner RocketSpawner;
     private MCMove MCMove;
+
+    //SCORE - score calculation parameter
+    public int winScore = 500;
+    public float scoreRate = 1.5f;
 
     GameObject scoreUITextGO; //SCORE - reference to the text UI game object
     
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         playAgainButton = GameObject.Find("PlayAgainButton");
 
+        HammerSpawner = GameObject.Find("HammerSpawner").GetComponent<HammerSpawn>();
         RocketSpawner = GameObject.Find("RocketSpawner").GetComponent<RocketSpawner>();
         MCMove = GameObject.Find("MC Hammer").GetComponent<MCMove>();
 
@@ -61,9 +67,8 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
-        //Add one to our level number.
+        scoreUITextGO.GetComponent<GameScore>().Score += (int)(winScore * Mathf.Pow(scoreRate, level));
         level++;
-        //Call InitGame to initialize our level.
         InitGame();
     }
 
@@ -71,10 +76,11 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         doingSetup = true;
-        player.transform.position = new Vector3(0, -3, 0);
-        InitObstacles();
         levelText.text = "Level " + level;
         levelImage.SetActive(true);
+        DestroyAllObstacles();
+        player.transform.position = new Vector3(0, -3, 0);
+        InitObstacles();
         Invoke("HideLevelImage", levelStartDelay);
 
     }
@@ -91,10 +97,13 @@ public class GameManager : MonoBehaviour
 
         if (currObstacle == "RocketSpawner")
         {
-            RocketSpawner.BeginSpawning();
+            RocketSpawner.active = true;
         } else if (currObstacle == "MCMove")
         {
             MCMove.active = true;
+        } else if (currObstacle == "HammerSpawner")
+        {
+            HammerSpawner.active = true;
         }
 
         RocketSpawner.IncreaseSpawnRate();
@@ -124,6 +133,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        DisableAll();
         levelText.text = "YOU CAN'T TOUCH THIS";
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);    
@@ -139,5 +149,23 @@ public class GameManager : MonoBehaviour
 
         playAgainButton.SetActive(false);
         InitGame();
+    }
+
+
+    public void DisableAll()
+    {
+        doingSetup = true;
+        HammerSpawner.active = false;
+        RocketSpawner.active = false;
+        DestroyAllObstacles();
+    }
+
+
+    public void DestroyAllObstacles()
+    {
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Obstacle");
+
+        for (var i = 0; i < gameObjects.Length; i++)
+            Destroy(gameObjects[i]);
     }
 }
