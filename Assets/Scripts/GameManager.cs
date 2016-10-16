@@ -84,12 +84,12 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
-<<<<<<< HEAD
+
         MCMove.TimeReset();
         player.transform.position = new Vector3(0, -3, 0);
-=======
+
         //SCORE - score update
->>>>>>> origin/master
+
         scoreUITextGO.GetComponent<GameScore>().Score += (int)(winScore * Mathf.Pow(scoreRate, level));
 
         level++;
@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         DisableAll();
         DestroyAllObstacles();
         levelText.text = "YOU CAN'T TOUCH THIS";
-<<<<<<< HEAD
+
         /*
         scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
 
@@ -197,9 +197,6 @@ public class GameManager : MonoBehaviour
             hiScoreUITextGO.GetComponent<GameScore>().Score = scoreUITextGO2.GetComponent<GameScore>().Score;
         */
        
-
-=======
->>>>>>> origin/master
 
         //SCORE - FINAL
         scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
