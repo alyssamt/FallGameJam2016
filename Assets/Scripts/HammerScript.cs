@@ -3,22 +3,8 @@ using System.Collections;
 
 public class HammerScript : MonoBehaviour {
 
-    GameManager gm;
-	HammerSpawn spawnScript;
 	public float level;
-	float speed = 2f;
-
-	// Use this for initialization
-	void Awake () {
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-		spawnScript = GameObject.Find ("HammerSpawner").GetComponent<HammerSpawn> ();
-	}
-
-	void Start () {
-	}
 	
-		
-		// Update is called once per frame
 	void Update () {
 
 		Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
@@ -39,19 +25,5 @@ public class HammerScript : MonoBehaviour {
         }
         
 	}
-			
-
-		/*
-	void OnTriggerEnter2D (Collider2D coll)
-	{
-		if (coll.name == "Player") {
-			coll.GetComponent<PlayerMovement> ().enabled = false;
-			Debug.Log ("YOU WERE HIT BY HAMMER");
-			gameObject.SetActive (false);
-            gm.GameOver();
-		}	
-
-	}
-    */
 }
 
