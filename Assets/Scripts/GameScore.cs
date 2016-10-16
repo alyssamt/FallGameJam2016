@@ -20,7 +20,7 @@ public class GameScore : MonoBehaviour {
         }
     }
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         //Get the Text UI component of this gameObject
         scoreTextUI = GetComponent<Text>();
 	}

@@ -28,7 +28,9 @@ public class GameManager : MonoBehaviour
 
     GameObject scoreUITextGO; //SCORE - reference to the text UI game object
     GameObject scoreUITextGO2; //SCORE - reference to the text UI game object
-    GameObject hiScoreUITextGO; //SCORE - reference to the text UI game object
+    GameObject scoreUITextGO3; //SCORE - reference to the text UI game object
+    GameObject imgNewGO;
+    GameObject resetHiScore;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -63,13 +65,17 @@ public class GameManager : MonoBehaviour
         //SCORE - get the score text UI
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
         scoreUITextGO2 = GameObject.FindGameObjectWithTag("ScoreText2Tag");
+        scoreUITextGO3 = GameObject.FindGameObjectWithTag("ScoreHiTextTag");
+        imgNewGO = GameObject.Find("NEW");
+        resetHiScore = GameObject.Find("ResetButton");
+        //SCORE - initialize
+        scoreUITextGO.GetComponent<GameScore>().Score = 0;
+        //SCORE - hide hiscore features
+        imgNewGO.SetActive(false);
+        resetHiScore.SetActive(false);
 
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
-
-        
-        
-        //hiScoreUITextGO = GameObject.FindGameObjectWithTag("HiScoreTextTag");
 
         //Call the InitGame function to initialize the first level 
         InitGame();
@@ -78,10 +84,14 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
+<<<<<<< HEAD
         MCMove.TimeReset();
         player.transform.position = new Vector3(0, -3, 0);
+=======
+        //SCORE - score update
+>>>>>>> origin/master
         scoreUITextGO.GetComponent<GameScore>().Score += (int)(winScore * Mathf.Pow(scoreRate, level));
-        //scoreUITextGO2.GetComponent<GameScore>().Score = 1000;//scoreUITextGO.GetComponent<GameScore>().Score;//!!!!!
+
         level++;
         InitGame();
     }
@@ -89,6 +99,19 @@ public class GameManager : MonoBehaviour
     //Initializes the game for each level.
     void InitGame()
     {
+        //SCORE - transition
+        scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
+        if (PlayerPrefs.HasKey("HiScorePlayerPrefs"))
+        {
+            scoreUITextGO3.GetComponent<GameScore>().Score = PlayerPrefs.GetInt("HiScorePlayerPrefs");
+        }
+        else
+        {
+            scoreUITextGO3.GetComponent<GameScore>().Score = 0;
+        }
+        imgNewGO.SetActive(false);
+        resetHiScore.SetActive(false);
+
         doingSetup = true;
         levelText.text = "Level " + level;
         levelImage.SetActive(true);
@@ -152,7 +175,7 @@ public class GameManager : MonoBehaviour
             return;
         //SCORE - decrease score
         if (scoreUITextGO.GetComponent<GameScore>().Score > 0)
-            scoreUITextGO.GetComponent<GameScore>().Score -= 1;
+            scoreUITextGO.GetComponent<GameScore>().Score--;
     }
 
 
@@ -161,6 +184,7 @@ public class GameManager : MonoBehaviour
         DisableAll();
         DestroyAllObstacles();
         levelText.text = "YOU CAN'T TOUCH THIS";
+<<<<<<< HEAD
         /*
         scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
 
@@ -174,11 +198,23 @@ public class GameManager : MonoBehaviour
         */
        
 
+=======
+>>>>>>> origin/master
 
+        //SCORE - FINAL
+        scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
+        if (scoreUITextGO3.GetComponent<GameScore>().Score < scoreUITextGO2.GetComponent<GameScore>().Score)
+        {
+            scoreUITextGO3.GetComponent<GameScore>().Score = scoreUITextGO2.GetComponent<GameScore>().Score;
+            PlayerPrefs.SetInt("HiScorePlayerPrefs", scoreUITextGO3.GetComponent<GameScore>().Score);
+            PlayerPrefs.Save();
+            imgNewGO.SetActive(true);
+        }
+        resetHiScore.SetActive(true);
 
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);    
-        enabled = false;
+        //enabled = false;//WHYYYYY!!!!!!!!
     }
 
     public void PlayAgain()
@@ -190,6 +226,14 @@ public class GameManager : MonoBehaviour
 
         playAgainButton.SetActive(false);
         InitGame();
+    }
+
+    //SCORE - resetting high score
+    public void ResetHiScore()
+    {
+        scoreUITextGO3.GetComponent<GameScore>().Score = 0;
+        PlayerPrefs.SetInt("HiScorePlayerPrefs", 0);
+        PlayerPrefs.Save();
     }
 
 
