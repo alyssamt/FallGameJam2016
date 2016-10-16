@@ -5,33 +5,49 @@ public class PopperSpawner : MonoBehaviour {
 
     public GameObject popper;
     public GameObject confetti;
-    public Transform confSpawn;
-    public float intervals = 4.0f;
+    public float spawnTime = 4.0f;
+    public float destoryDelay = 2.0f;
+    public GameObject newPop;
 
     // Use this for initialization
     void Start () {
-        InvokeRepeating("spawn", 1, intervals);
+        InvokeRepeating("Spawn", 2, spawnTime);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        Destroy(newPop, 2.0f);
 	}
 
     void Spawn()
     {
-        GameObject newPop;
+        //this is the bottom-left point of the screen
+        Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+
+        //this is the top-right point of the screen
+        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+
+        Vector2 spawnPoints;
         float randomX = Random.Range(0.0f, 1.0f);
 
-        if(randomX <= 1.0f)
+        if (randomX < 0.5)
         {
-            newPop = (GameObject)Instantiate(popper, new Vector3(0, Random.Range(0.0f, 1.0f), 0), Quaternion.identity);
-        } else
+            spawnPoints = new Vector2(min.x, Random.Range(min.y, max.y));
+            newPop = (GameObject)Instantiate(popper, spawnPoints, Quaternion.identity);
+            newPop.GetComponent<Popper>().left = true;
+        }
+        else
         {
-            newPop = (GameObject)Instantiate(popper, new Vector3(1, Random.Range(0.0f, 1.0f), 0), Quaternion.identity);
+            spawnPoints = new Vector2(max.x, Random.Range(min.y, max.y));
+            newPop = (GameObject)Instantiate(popper, spawnPoints, Quaternion.AngleAxis(90, Vector3.forward));
+            newPop.GetComponent<Popper>().left = false;
         }
 
         newPop.GetComponent<Popper>().confetti = this.confetti;
-        newPop.GetComponent<Popper>().confSpawn = this.confSpawn;
+    }
+
+    void DelayDestroy()
+    {
+        
     }
 }
