@@ -7,7 +7,7 @@ public class RocketMove : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        speed = 2f; // set speed
+        speed = 4f; // set speed
 	}
 	
 	// Update is called once per frame
