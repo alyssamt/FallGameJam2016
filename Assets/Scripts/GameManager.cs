@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour
     public void DisableAll()
     {
         doingSetup = true;
+        MCMove.active = false;
         HammerSpawner.active = false;
         RocketSpawner.active = false;
         DestroyAllObstacles();
