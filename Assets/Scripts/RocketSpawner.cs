@@ -23,7 +23,7 @@ public class RocketSpawner : MonoBehaviour {
             if (spawnRate <= 0)
             {
                 SpawnEnemy();
-                spawnRate = 1f;
+                spawnRate = 5f;
             }
         }
     }
