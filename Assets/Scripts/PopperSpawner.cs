@@ -10,13 +10,14 @@ public class PopperSpawner : MonoBehaviour
     public float spawnTime = 4.0f;
     public float destoryDelay = 2.0f;
     public GameObject newPop;
-    public bool active;
+    //public bool active;
 
     // Use this for initialization
     void Start()
     {
         //InvokeRepeating("Spawn", 2, spawnTime);
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        this.enabled = false;
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class PopperSpawner : MonoBehaviour
     {
         Destroy(newPop, 2.0f);
 
-        if (active && !gm.doingSetup)
+        if (this.enabled && !gm.doingSetup)
         {
             spawnTime -= Time.deltaTime;
             if (spawnTime <= 0)

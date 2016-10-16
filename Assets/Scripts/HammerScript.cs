@@ -26,17 +26,17 @@ public class HammerScript : MonoBehaviour {
 
         //if the enemy went outside the screen on the bottom, then destroy the enemy
         
-        /*if (transform.position.y < min.y || transform.position.x < min.x || transform.position.y > max.y || transform.position.x > max.x)
+        if (transform.position.y < min.y || transform.position.x < min.x || transform.position.y > max.y || transform.position.x > max.x)
         {
             Debug.Log("Destroying hammer");
             Destroy(gameObject);
-        }*/
+        }
 
         //if the hammer is stuck inside MC Hammer and not moving, destroy the hammer
-        if (GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
+        /*if (GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
         {
             Destroy(gameObject);
-        }
+        }*/
         
 	}
 			

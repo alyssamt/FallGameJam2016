@@ -5,7 +5,7 @@ using UnityEngine.UI;                   //Allows us to use UI.
 
 public class GameManager : MonoBehaviour
 {
-    public float levelStartDelay = 2f;                      //Time to wait before starting level, in seconds.
+    public float levelStartDelay = 1f;                      //Time to wait before starting level, in seconds.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
     public bool doingSetup = true;
     public int level = 1;
@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private GameObject levelImage;                          //Image to block out level as levels are being set up, background for levelText.
     private GameObject playAgainButton;
     private GameObject player;
+    private GameObject mcHammer;
 
     private string[] levelProgression = {"", "", "MCMove", "HammerSpawner", "PopperSpawner", "RocketSpawner"};
     private HammerSpawn HammerSpawner;
@@ -47,7 +48,9 @@ public class GameManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
+            
         player = GameObject.Find("Player");
+        mcHammer = GameObject.Find("MC Hammer");
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         playAgainButton = GameObject.Find("PlayAgainButton");
@@ -75,6 +78,8 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
+        MCMove.TimeReset();
+        player.transform.position = new Vector3(0, -3, 0);
         scoreUITextGO.GetComponent<GameScore>().Score += (int)(winScore * Mathf.Pow(scoreRate, level));
         //scoreUITextGO2.GetComponent<GameScore>().Score = 1000;//scoreUITextGO.GetComponent<GameScore>().Score;//!!!!!
         level++;
@@ -88,10 +93,8 @@ public class GameManager : MonoBehaviour
         levelText.text = "Level " + level;
         levelImage.SetActive(true);
         DestroyAllObstacles();
-        player.transform.position = new Vector3(0, -3, 0);
-        InitObstacles();
         Invoke("HideLevelImage", levelStartDelay);
-
+        Invoke("InitObstacles", 1.2f);
     }
 
 
@@ -103,20 +106,29 @@ public class GameManager : MonoBehaviour
         }
 
         string currObstacle = levelProgression[level];
+        
+        if (level >= 2)
+        {
+            MCMove.enabled = true;
+        }
 
         if (currObstacle == "RocketSpawner")
         {
-            RocketSpawner.active = true;
+            //RocketSpawner.active = true;
+            RocketSpawner.enabled = true;
         } else if (currObstacle == "MCMove")
         {
-            MCMove.active = true;
+            //MCMove.active = true;
+            MCMove.enabled = true;
         } else if (currObstacle == "HammerSpawner")
         {
-            HammerSpawner.active = true;
+            //HammerSpawner.active = true;
+            HammerSpawner.enabled = true;
         }
         else if (currObstacle == "PopperSpawner")
         {
-            PopperSpawner.active = true;
+            //PopperSpawner.active = true;
+            PopperSpawner.enabled = true;
         }
 
         RocketSpawner.IncreaseSpawnRate();
@@ -147,6 +159,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         DisableAll();
+        DestroyAllObstacles();
         levelText.text = "YOU CAN'T TOUCH THIS";
         /*
         scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
@@ -158,7 +171,7 @@ public class GameManager : MonoBehaviour
 
         if (hiScoreUITextGO.GetComponent<GameScore>().Score < scoreUITextGO2.GetComponent<GameScore>().Score)
             hiScoreUITextGO.GetComponent<GameScore>().Score = scoreUITextGO2.GetComponent<GameScore>().Score;
-*/
+        */
        
 
 
@@ -183,10 +196,43 @@ public class GameManager : MonoBehaviour
     public void DisableAll()
     {
         doingSetup = true;
+        /*
         MCMove.active = false;
         HammerSpawner.active = false;
         RocketSpawner.active = false;
-        DestroyAllObstacles();
+        DestroyAllObstacles(); breaking stuff
+        */
+
+        foreach(GameObject moving in GameObject.FindGameObjectsWithTag("Obstacle")) {
+            BGDancer movementDancer = moving.GetComponent<BGDancer>();
+            if (movementDancer != null)
+            {
+                movementDancer.enabled = false;
+            }
+        }
+    }
+
+    IEnumerator SecondsDelay()
+    {
+        Time.timeScale = 0f;
+        float realTimeToUnpause = Time.realtimeSinceStartup + 2;
+
+        while (Time.realtimeSinceStartup < realTimeToUnpause)
+        {
+            yield return null;
+        }
+
+        Time.timeScale = 1.0f;
+    }
+
+    public void RemoveTime()
+    {
+        StartCoroutine(SecondsDelay());   
+    }
+
+    public void EnableAll()
+    {
+
     }
 
 
