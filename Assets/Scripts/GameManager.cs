@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         DisableAll();
-        levelText.text = "YOU CAN'T TOUCH THIS";
+        levelText.text = "YOU CAN'T TOUCH THIS!";
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);    
         enabled = false;
