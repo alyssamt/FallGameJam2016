@@ -8,7 +8,8 @@ public class Obstacle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-	}
+
+    }
 
     // Update is called once per frame
     void Update()

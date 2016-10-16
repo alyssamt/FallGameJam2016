@@ -28,4 +28,5 @@ public class Confetti : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+    
 }

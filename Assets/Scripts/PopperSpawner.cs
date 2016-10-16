@@ -30,7 +30,7 @@ public class PopperSpawner : MonoBehaviour
             if (spawnTime <= 0)
             {
                 Spawn();
-                spawnTime = 1f;
+                spawnTime = 4f;
             }
         }
     }
