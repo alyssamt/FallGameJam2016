@@ -3,18 +3,30 @@ using System.Collections;
 
 public class RocketSpawner : MonoBehaviour {
 
+    public GameManager gm;
     public GameObject RocketGO; //this is our enemy prefab
     public float maxSpawnRateInSeconds = 5f;
+    public float spawnRate = 1f;
+    public bool active;
 
 	// Use this for initialization
 	void Start () {
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+	}
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        if (active && !gm.doingSetup)
+        {
+            spawnRate -= Time.deltaTime;
+            if (spawnRate <= 0)
+            {
+                SpawnEnemy();
+                spawnRate = 1f;
+            }
+        }
+    }
 
 
     public void BeginSpawning()
@@ -37,28 +49,31 @@ public class RocketSpawner : MonoBehaviour {
 
         //instantiate an enemy
         GameObject anEnemy = (GameObject)Instantiate(RocketGO);
-        anEnemy.transform.position = new Vector2(Random.Range(min.x, max.x), max.y+3.5f);
+        anEnemy.transform.position = new Vector2(Random.Range(min.x, max.x), max.y + 3.5f);
 
         //schedule when to spawn next enemy
-        ScheduleNextEnemySpawn();
+        //ScheduleNextEnemySpawn();
     }
 
     void ScheduleNextEnemySpawn()
     {
-        /*
-        float spawnInNSeconds;
-
-        if (maxSpawnRateInSeconds > 1f)
+        if (!gm.doingSetup)
         {
-            //pick a number between 1 and maxSpawnRateInSeconds
-            spawnInNSeconds = Random.Range(1f, maxSpawnRateInSeconds);
+            /*
+            float spawnInNSeconds;
 
+            if (maxSpawnRateInSeconds > 1f)
+            {
+                //pick a number between 1 and maxSpawnRateInSeconds
+                spawnInNSeconds = Random.Range(1f, maxSpawnRateInSeconds);
+
+            }
+            else
+                spawnInNSeconds = 1f;
+                */
+
+            Invoke("SpawnEnemy", Random.Range(1f, maxSpawnRateInSeconds));
         }
-        else
-            spawnInNSeconds = 1f;
-            */
-
-        Invoke("SpawnEnemy", Random.Range(1f, maxSpawnRateInSeconds));
     }
 
     //function to increase the difficulty of the game
