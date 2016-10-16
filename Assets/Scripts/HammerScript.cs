@@ -31,12 +31,6 @@ public class HammerScript : MonoBehaviour {
             Debug.Log("Destroying hammer");
             Destroy(gameObject);
         }
-
-        //if the hammer is stuck inside MC Hammer and not moving, destroy the hammer
-        /*if (GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
-        {
-            Destroy(gameObject);
-        }*/
         
 	}
 			
