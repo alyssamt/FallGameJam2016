@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     private GameObject playAgainButton;
     private GameObject player;
 
-    private string[] levelProgression = {"", "", "MCMove", "HammerSpawner", "RocketSpawner"};
+    private string[] levelProgression = {"", "", "MCMove", "HammerSpawner", "PopperSpawner", "RocketSpawner"};
     private HammerSpawn HammerSpawner;
+    private PopperSpawner PopperSpawner;
     private RocketSpawner RocketSpawner;
     private MCMove MCMove;
 
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
         playAgainButton = GameObject.Find("PlayAgainButton");
 
         HammerSpawner = GameObject.Find("HammerSpawner").GetComponent<HammerSpawn>();
+        PopperSpawner = GameObject.Find("Popper Spawner").GetComponent<PopperSpawner>();
         RocketSpawner = GameObject.Find("RocketSpawner").GetComponent<RocketSpawner>();
         MCMove = GameObject.Find("MC Hammer").GetComponent<MCMove>();
 
@@ -104,6 +106,10 @@ public class GameManager : MonoBehaviour
         } else if (currObstacle == "HammerSpawner")
         {
             HammerSpawner.active = true;
+        }
+        else if (currObstacle == "PopperSpawner")
+        {
+            PopperSpawner.active = true;
         }
 
         RocketSpawner.IncreaseSpawnRate();
@@ -167,6 +173,11 @@ public class GameManager : MonoBehaviour
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Obstacle");
 
         for (var i = 0; i < gameObjects.Length; i++)
-            Destroy(gameObjects[i]);
+        {
+            if (gameObjects[i].name != "BG Dancer(Clone)")
+            {
+                Destroy(gameObjects[i]);
+            }
+        }
     }
 }

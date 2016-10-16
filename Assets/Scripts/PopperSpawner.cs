@@ -3,21 +3,34 @@ using System.Collections;
 
 public class PopperSpawner : MonoBehaviour {
 
+    public GameManager gm;
     public GameObject popper;
     public GameObject confetti;
     public float spawnTime = 4.0f;
     public float destoryDelay = 2.0f;
     public GameObject newPop;
+    public bool active;
 
     // Use this for initialization
     void Start () {
-        InvokeRepeating("Spawn", 2, spawnTime);
+        //InvokeRepeating("Spawn", 2, spawnTime);
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Destroy(newPop, 2.0f);
-	}
+
+        if (active && !gm.doingSetup)
+        {
+            spawnTime -= Time.deltaTime;
+            if (spawnTime <= 0)
+            {
+                Spawn();
+                spawnTime = 1f;
+            }
+        }
+    }
 
     void Spawn()
     {

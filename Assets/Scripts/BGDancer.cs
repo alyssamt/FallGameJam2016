@@ -21,7 +21,7 @@ public class BGDancer : MonoBehaviour
         v = Quaternion.AngleAxis(degreesPerSecond * Time.deltaTime, Vector3.forward) * v;
         transform.position = center.position + v;
     }
-
+    /*
     void OnCollisionEnter2D(Collision2D coll)
     {
         if(coll.collider.name == "Player")
@@ -29,4 +29,5 @@ public class BGDancer : MonoBehaviour
             gm.GameOver();
         }
     }
+    */
 }
