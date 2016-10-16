@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     GameObject scoreUITextGO2; //SCORE - reference to the text UI game object
     GameObject scoreUITextGO3; //SCORE - reference to the text UI game object
     GameObject imgNewGO;
-    GameObject resetHiScore;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -67,12 +66,12 @@ public class GameManager : MonoBehaviour
         scoreUITextGO2 = GameObject.FindGameObjectWithTag("ScoreText2Tag");
         scoreUITextGO3 = GameObject.FindGameObjectWithTag("ScoreHiTextTag");
         imgNewGO = GameObject.Find("NEW");
-        resetHiScore = GameObject.Find("ResetButton");
+       
         //SCORE - initialize
         scoreUITextGO.GetComponent<GameScore>().Score = 0;
         //SCORE - hide hiscore features
         imgNewGO.SetActive(false);
-        resetHiScore.SetActive(false);
+       
 
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
@@ -110,7 +109,6 @@ public class GameManager : MonoBehaviour
             scoreUITextGO3.GetComponent<GameScore>().Score = 0;
         }
         imgNewGO.SetActive(false);
-        resetHiScore.SetActive(false);
 
         doingSetup = true;
         levelText.text = "Level " + level;
@@ -207,7 +205,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
             imgNewGO.SetActive(true);
         }
-        resetHiScore.SetActive(true);
 
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);    
@@ -225,13 +222,7 @@ public class GameManager : MonoBehaviour
         InitGame();
     }
 
-    //SCORE - resetting high score
-    public void ResetHiScore()
-    {
-        scoreUITextGO3.GetComponent<GameScore>().Score = 0;
-        PlayerPrefs.SetInt("HiScorePlayerPrefs", 0);
-        PlayerPrefs.Save();
-    }
+    
 
 
     public void DisableAll()
