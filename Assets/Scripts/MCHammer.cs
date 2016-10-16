@@ -11,6 +11,7 @@ public class MCHammer : MonoBehaviour {
     public float level;
 
     GameObject scoreUITextGO; //SCORE - reference to the text UI game object
+    GameObject scoreUITextGO2; //SCORE - reference to the text UI game object
 
     // Use this for initialization
     void Start () {
@@ -18,11 +19,12 @@ public class MCHammer : MonoBehaviour {
         
         //SCORE - get the score text UI
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+        scoreUITextGO2 = GameObject.FindGameObjectWithTag("ScoreTextTag2");
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
     }
 
     void OnCollisionEnter2D (Collision2D coll)
@@ -31,6 +33,8 @@ public class MCHammer : MonoBehaviour {
 
         //add calculated points to the score
         scoreUITextGO.GetComponent<GameScore>().Score += (int) (winScore * Mathf.Pow(scoreRate, gm.level));
+        
+        
         //Debug.Log(winScore);
         //Debug.Log(scoreRate);
         //Debug.Log(gm.level);
