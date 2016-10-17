@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private RocketSpawner RocketSpawner;
     private MCMove MCMove;
 
+    private bool impossibleSpawned = false;
+
     //SCORE - score calculation parameter
     public int winScore = 500;
     public float scoreRate = 1.5f;
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour
     GameObject scoreUITextGO3; //SCORE - reference to the text UI game object
     GameObject imgNewGO;
 
-    //Awake is always called before any Start functions
+
     void Awake()
     {
         Debug.Log("Awake called");
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
     }
 
     //This is called each time a scene is loaded.
-    public void OnLevelWasLoaded()
+    public void LoadLevel()
     {
         HammerSpawner.SpeedUp();
         MCMove.SpeedUp();
@@ -130,41 +132,71 @@ public class GameManager : MonoBehaviour
         levelImage.SetActive(true);
         DestroyAllObstacles();
         Invoke("HideLevelImage", levelStartDelay);
-        Invoke("InitObstacles", 2f);
+        Invoke("InitObstacles", 0.1f);
     }
 
 
     void InitObstacles()
     {
+        if (MainMenuManager.impossible && !impossibleSpawned)
+        {
+            SpawnImpossible();
+        }
+
         DancerSpawner.Spawn();
 
-        if (level >= levelProgression.Length)
+        if (!MainMenuManager.impossible)
         {
-            return;
-        }
+            if (level >= levelProgression.Length)
+            {
+                return;
+            }
 
-        string currObstacle = levelProgression[level];
+            string currObstacle = levelProgression[level];
 
-        if (currObstacle == "RocketSpawner")
-        {
-            //RocketSpawner.active = true;
-            RocketSpawner.enabled = true;
-        } else if (currObstacle == "MCMove")
-        {
-            //MCMove.active = true;
-            MCMove.enabled = true;
-        } else if (currObstacle == "HammerSpawner")
-        {
-            //HammerSpawner.active = true;
-            HammerSpawner.enabled = true;
-        }
-        else if (currObstacle == "PopperSpawner")
-        {
-            //PopperSpawner.active = true;
-            PopperSpawner.enabled = true;
-        }
+            if (currObstacle == "RocketSpawner")
+            {
+                //RocketSpawner.active = true;
+                RocketSpawner.enabled = true;
+            }
+            else if (currObstacle == "MCMove")
+            {
+                //MCMove.active = true;
+                MCMove.enabled = true;
+            }
+            else if (currObstacle == "HammerSpawner")
+            {
+                //HammerSpawner.active = true;
+                HammerSpawner.enabled = true;
+            }
+            else if (currObstacle == "PopperSpawner")
+            {
+                //PopperSpawner.active = true;
+                PopperSpawner.enabled = true;
+            }
 
-        RocketSpawner.IncreaseSpawnRate();
+            RocketSpawner.IncreaseSpawnRate();
+        }
+    }
+
+
+    void SpawnImpossible()
+    {
+        Debug.Log("IMPOSSIBLE MODE ENABLED");
+        MCMove.enabled = true;
+        MCMove.speed = MCMove.maxSpeed;
+        DancerSpawner.spawnMax = DancerSpawner.spawnMaxMax;
+
+        HammerSpawner.enabled = true;
+        HammerSpawner.spawnRate = HammerSpawner.maxSpawnRate;
+
+        PopperSpawner.enabled = true;
+
+        RocketSpawner.enabled = true;
+        RocketSpawner.spawnRate = RocketSpawner.maxSpawnRateInSeconds;
+        RocketSpawner.maxSizeIncrease = RocketSpawner.maxSizeIncreaseMax;
+
+        impossibleSpawned = true;
     }
 
 
@@ -219,7 +251,13 @@ public class GameManager : MonoBehaviour
     {
         mcHammer.GetComponent<MCMove>().Reset();
         player.GetComponent<PlayerMovement>().Reset();
-        DisableAll();
+        if (!MainMenuManager.impossible)
+        {
+            DisableAll();
+        } else
+        {
+            impossibleSpawned = false;
+        }
         level = 1;
         scoreUITextGO.GetComponent<GameScore>().Score = 0;
         playAgainButton.SetActive(false);

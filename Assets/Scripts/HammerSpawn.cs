@@ -8,7 +8,8 @@ public class HammerSpawn : MonoBehaviour
     public GameObject MCHammer;
     public GameObject prefab;
     public float spawnTimer;
-    public float spawnRate;
+    public float spawnRate = 1f;
+    public float maxSpawnRate = 0.5f;
 
     private int i = 0;
 
@@ -92,7 +93,7 @@ public class HammerSpawn : MonoBehaviour
 
     public void SpeedUp()
     {
-        if (spawnRate >= 0.05f)
+        if (spawnRate >= maxSpawnRate || MainMenuManager.impossible)
         {
             spawnRate -= 0.0025f;
         }

@@ -6,24 +6,34 @@ public class MainMenuManager : MonoBehaviour {
 
     GameObject MenuPage;
     GameObject CreditsPage;
+    static public bool impossible = false;
 
-	// Use this for initialization
-	void Start () {
+    void Start () {
         MenuPage = GameObject.Find("MenuPage");
         CreditsPage = GameObject.Find("CreditsPage");
         CreditsPage.SetActive(false);
 	}
+
 
     public void StartButton()
     {
         SceneManager.LoadScene("Main Scene");
     }
 
+
+    public void ImpossibleButton()
+    {
+        impossible = true;
+        SceneManager.LoadScene("Main Scene");
+    }
+
+
     public void CreditsButton()
     {
         CreditsPage.SetActive(true);
         MenuPage.SetActive(false);
     }
+
 
     public void BackButton()
     {

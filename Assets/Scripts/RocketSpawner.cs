@@ -8,6 +8,7 @@ public class RocketSpawner : MonoBehaviour {
     public float maxSpawnRateInSeconds = 5f;
     public float spawnRate = 1f;
     public float maxSizeIncrease = 0;
+    public float maxSizeIncreaseMax = 2;
 
 
 	void Start () {
@@ -65,14 +66,14 @@ public class RocketSpawner : MonoBehaviour {
     //called from GameManager each level
     public void IncreaseSpawnRate()
     {
-        if (maxSpawnRateInSeconds > 1f)
+        if (maxSpawnRateInSeconds > 1f || MainMenuManager.impossible)
             maxSpawnRateInSeconds--;
 
         if (maxSpawnRateInSeconds == 1f)
             CancelInvoke("IncreaseSpawnRate");
 
         //also increases SIZE :)
-        if (maxSizeIncrease <= 2)
+        if (maxSizeIncrease <= maxSizeIncreaseMax || MainMenuManager.impossible)
         {
             maxSizeIncrease += 0.1f;
         }

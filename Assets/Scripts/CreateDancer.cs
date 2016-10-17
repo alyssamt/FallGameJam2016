@@ -6,6 +6,7 @@ public class CreateDancer : MonoBehaviour {
     public GameObject dancer;
     public GameObject MCHammer;
     public int spawnMax = 1;
+    public int spawnMaxMax = 5;
     public GameManager gm;
     
 
@@ -29,7 +30,7 @@ public class CreateDancer : MonoBehaviour {
 
     public void increaseDancer()
     {
-        if (spawnMax < 5)
+        if (spawnMax < spawnMaxMax)
         {
             spawnMax += 1;
         }
