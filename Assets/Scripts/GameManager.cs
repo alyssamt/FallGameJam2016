@@ -227,9 +227,13 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        Camera.main.GetComponent<AudioSource>().Pause();
+        playAgainButton.GetComponent<AudioSource>().Play();
+        Invoke("PlayMusic", 1.6f);
+
         DisableAll();
         DestroyAllObstacles();
-        levelText.text = "YOU CAN'T TOUCH THIS";
+        levelText.text = "YOU CAN'T TOUCH THIS!";
                
 
         //SCORE - FINAL
@@ -244,6 +248,12 @@ public class GameManager : MonoBehaviour
 
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);
+    }
+
+
+    public void PlayMusic()
+    {
+        Camera.main.GetComponent<AudioSource>().Play();
     }
 
 

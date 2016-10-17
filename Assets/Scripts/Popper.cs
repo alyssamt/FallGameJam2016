@@ -5,7 +5,7 @@ public class Popper : MonoBehaviour {
 
     public GameObject confetti;
     public bool left;
-    public int numOfConf = 7;
+    public int numOfConf = 4;
 
     // Use this for initialization
     void Start () {
