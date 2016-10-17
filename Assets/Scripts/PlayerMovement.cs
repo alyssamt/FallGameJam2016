@@ -51,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
 
 	void LoadLevel()
 	{
-
 		gm.OnLevelWasLoaded();
 	}
 

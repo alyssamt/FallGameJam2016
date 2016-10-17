@@ -10,12 +10,11 @@ public class PopperSpawner : MonoBehaviour
     public float spawnTime = 4.0f;
     public float destoryDelay = 2.0f;
     public GameObject newPop;
-    //public bool active;
+    public Popper Popper;
 
     // Use this for initialization
     void Start()
     {
-        //InvokeRepeating("Spawn", 2, spawnTime);
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         this.enabled = false;
     }
@@ -63,8 +62,11 @@ public class PopperSpawner : MonoBehaviour
         newPop.GetComponent<Popper>().confetti = this.confetti;
     }
 
-    void DelayDestroy()
+    public void increaseSpawn()
     {
-
+        if (spawnTime > 2.5f)
+        {
+            spawnTime -= 0.3f;
+        }
     }
 }

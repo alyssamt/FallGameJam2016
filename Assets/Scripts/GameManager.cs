@@ -88,7 +88,17 @@ public class GameManager : MonoBehaviour
     {
         HammerSpawner.SpeedUp();
         MCMove.SpeedUp();
-        DancerSpawner.increaseDancer();
+        if (level % 3 == 0)
+        {
+            DancerSpawner.increaseDancer();
+        }
+
+        if (level % 5 == 0)
+        {
+            PopperSpawner.increaseSpawn();
+        }
+
+
         MCMove.Reset();
         player.GetComponent<PlayerMovement>().Reset();
 
