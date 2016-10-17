@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
-
+        MCMove.enabled = false;
         MCMove.TimeReset();
         mcHammer.GetComponent<MCMove>().Reset();
         player.GetComponent<PlayerMovement>().Reset();
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         levelImage.SetActive(true);
         DestroyAllObstacles();
         Invoke("HideLevelImage", levelStartDelay);
-        Invoke("InitObstacles", 1.2f);
+        Invoke("InitObstacles", 2f);
     }
 
 
