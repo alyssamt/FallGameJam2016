@@ -10,7 +10,7 @@ public class HammerSpawn : MonoBehaviour {
     //public bool active = false;
     public float spawnRate = 1f;
 
-    private int i;
+    private int i = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -36,48 +36,52 @@ public class HammerSpawn : MonoBehaviour {
     void SpawnEnemy()
     {
         float speed = Random.Range(30, 80);
-
-        //instantiate an enemy
         GameObject anEnemy = (GameObject)Instantiate(prefab);
-
-        i = Random.Range(0, 7);
         
-            switch (i)
-            {
-                case 0:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y + 1);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 1) * speed);
-                    break;
-                case 1:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x, MCHammer.transform.position.y + 1);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1) * speed);
-                    break;
-                case 2:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y + 1);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 1) * speed);
-                    break;
-                case 3:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * speed);
-                    break;
-                case 4:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y-1);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, -1) * speed);
-                    break;
-                case 5:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x, MCHammer.transform.position.y - 1);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1) * speed);
-                    break;
-                case 6:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x-1, MCHammer.transform.position.y - 1);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, -1) * speed);
-                    break;
-                case 7:
-                    anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y);
-                    anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * speed);
-                    break;
-                
-            }
+        switch (i)
+        {
+            case 0:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y + 1);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 1) * speed);
+                break;
+            case 1:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x, MCHammer.transform.position.y + 1);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1) * speed);
+                break;
+            case 2:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y + 1);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 1) * speed);
+                break;
+            case 3:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * speed);
+                break;
+            case 4:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x + 1, MCHammer.transform.position.y-1);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, -1) * speed);
+                break;
+            case 5:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x, MCHammer.transform.position.y - 1);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1) * speed);
+                break;
+            case 6:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x-1, MCHammer.transform.position.y - 1);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, -1) * speed);
+                break;
+            case 7:
+                anEnemy.transform.position = new Vector2(MCHammer.transform.position.x - 1, MCHammer.transform.position.y);
+                anEnemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * speed);
+                break;
+        }
+
+        if (i == 7)
+        {
+            i = 0;
+        }
+        else
+        {
+            i++;
+        }
         
     }
 }

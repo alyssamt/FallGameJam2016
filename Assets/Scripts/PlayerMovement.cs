@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public GameManager gm;
-    public float speed = 3.0f;
+    public float speed = 6.0f;
     MCMove mc;
     void Start()
     {

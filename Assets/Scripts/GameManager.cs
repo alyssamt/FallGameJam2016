@@ -86,8 +86,8 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
-    
-        mcHammer.GetComponent<MCMove>().Reset();
+        MCMove.SpeedUp();
+        MCMove.Reset();
         player.GetComponent<PlayerMovement>().Reset();
 
         //SCORE - score update
@@ -165,7 +165,8 @@ public class GameManager : MonoBehaviour
     //Hides black image used between levels
     void HideLevelImage()
     {
-        MCMove.Reset();
+        //MCMove.Reset();
+        MCMove.RandomDirection();
         MCMove.move = true;
         //Disable the levelImage gameObject.
         levelImage.SetActive(false);
