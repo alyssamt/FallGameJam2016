@@ -7,14 +7,11 @@ public class MCMove : MonoBehaviour
     float timeOffset = 0;
     int xdir, ydir, rand;
     public bool move;
-    public float speed;
-<<<<<<< HEAD
+    public float speed = 0.01f;
+    public float maxSpeed = 0.05f;
 
     private Vector2 min;
     private Vector2 max;
-
-=======
->>>>>>> origin/master
     Vector2 destination;
 
 
@@ -22,7 +19,6 @@ public class MCMove : MonoBehaviour
     {
         RandomDirection();
         this.enabled = false;
-        speed = 0.01f;
         min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
     }
@@ -64,7 +60,7 @@ public class MCMove : MonoBehaviour
 
     public void SpeedUp()
     {
-        if (speed <= 0.05f)
+        if (speed <= maxSpeed || MainMenuManager.impossible)
         {
             speed += 0.0025f;
         }

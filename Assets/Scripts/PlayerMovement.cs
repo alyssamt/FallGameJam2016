@@ -13,15 +13,6 @@ public class PlayerMovement : MonoBehaviour
         Reset();
     }
 
-    /*void Update()
-    {
-        if (!gm.doingSetup)
-        {
-            var move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-            transform.position += move * speed * Time.deltaTime;
-        }
-        //Debug.Log("Player position: " + transform.position);
-    }*/
 
 	void Update()
 	{
@@ -49,17 +40,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-	void LoadLevel()
-	{
-
-		gm.OnLevelWasLoaded();
-	}
-
-	void FinishGame()
-	{
-		gm.GameOver();
-	}
-
     IEnumerator SecondsDelay()
     {
         yield return new WaitForSeconds(1);
@@ -71,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         gm.RemoveTime();
         yield return new WaitForSeconds(.000001f);
         gm.RemoveTime();
-        gm.OnLevelWasLoaded();
+        gm.LoadLevel();
     }
 
     IEnumerator FrameOverDelay()
