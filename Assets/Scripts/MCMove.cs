@@ -7,11 +7,13 @@ public class MCMove : MonoBehaviour
     float timeOffset = 0;
     int xdir, ydir, rand;
     public bool move;
+
     public float speed = 0.01f;
     public float maxSpeed = 0.05f;
 
     private Vector2 min;
     private Vector2 max;
+
     Vector2 destination;
 
 
@@ -26,9 +28,6 @@ public class MCMove : MonoBehaviour
 
     void Update()
     {
-        
-        Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
-        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
         if (move)
         {
