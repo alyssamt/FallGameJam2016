@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
+        HammerSpawner.SpeedUp();
         MCMove.SpeedUp();
         MCMove.Reset();
         player.GetComponent<PlayerMovement>().Reset();
