@@ -5,7 +5,6 @@ using System.Collections;
 public class MCMove : MonoBehaviour
 {
     //public bool active = false;
-    float timeOffset = 0;
     int xdir, ydir, rand;
     public bool move;
 
@@ -30,12 +29,12 @@ public class MCMove : MonoBehaviour
    {
         if (move)
         {
-            destination = new Vector2(transform.position.x + (xdir * speed * Screen.width / 80), transform.position.y + (ydir * speed * Screen.height / 50));
+            destination = new Vector2(transform.position.x + (xdir * speed), transform.position.y + (ydir * speed));
             while (destination.x < min.x || destination.x > max.x || destination.y < min.y || destination.y > max.y)
             {
                 Debug.Log("RandomDir Loop");
                 RandomDirection();
-                destination = new Vector2(transform.position.x + (xdir * speed * 2 * Screen.width / 80), transform.position.y + (ydir * speed * 2 * Screen.height / 50));
+                destination = new Vector2(transform.position.x + (xdir * speed * 2), transform.position.y + (ydir * speed * 2));
             }
             transform.position = destination;
         }
