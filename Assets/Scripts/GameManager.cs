@@ -88,7 +88,8 @@ public class GameManager : MonoBehaviour
     {
 
         MCMove.TimeReset();
-        player.transform.position = new Vector3(0, -3, 0);
+        mcHammer.GetComponent<MCMove>().Reset();
+        player.GetComponent<PlayerMovement>().Reset();
 
         //SCORE - score update
 

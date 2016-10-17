@@ -41,7 +41,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reset()
     {
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().angularVelocity = 0;
         transform.position = new Vector2(0, -3);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 
 
