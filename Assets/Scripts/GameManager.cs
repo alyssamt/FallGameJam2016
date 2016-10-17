@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public float levelStartDelay = 1f;                      //Time to wait before starting level, in seconds.
+    public float levelStartDelay = .2f;                      //Time to wait before starting level, in seconds.
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
     public bool doingSetup = true;
     public int level;
@@ -189,19 +189,7 @@ public class GameManager : MonoBehaviour
         DestroyAllObstacles();
         DestroyDancers();
         levelText.text = "YOU CAN'T TOUCH THIS";
-
-        /*
-        scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
-
-        //if (PlayerPrefs.GetInt("HiScorePlayerPrefs") == null)
-        //    PlayerPrefs.SetInt("HiScorePlayerPrefs", scoreUITextGO2.GetComponent<GameScore>().Score);
-
-        hiScoreUITextGO.GetComponent<GameScore>().Score = PlayerPrefs.GetInt("HiScorePlayerPrefs");
-
-        if (hiScoreUITextGO.GetComponent<GameScore>().Score < scoreUITextGO2.GetComponent<GameScore>().Score)
-            hiScoreUITextGO.GetComponent<GameScore>().Score = scoreUITextGO2.GetComponent<GameScore>().Score;
-        */
-       
+               
 
         //SCORE - FINAL
         scoreUITextGO2.GetComponent<GameScore>().Score = scoreUITextGO.GetComponent<GameScore>().Score;
@@ -214,8 +202,7 @@ public class GameManager : MonoBehaviour
         }
 
         levelImage.SetActive(true);
-        playAgainButton.SetActive(true);    
-        //enabled = false;//WHYYYYY!!!!!!!!
+        playAgainButton.SetActive(true);
     }
 
 
@@ -236,12 +223,6 @@ public class GameManager : MonoBehaviour
     public void DisableAll()
     {
         doingSetup = true;
-        /*
-        MCMove.active = false;
-        HammerSpawner.active = false;
-        RocketSpawner.active = false;
-        DestroyAllObstacles(); breaking stuff
-        */
 
         MCMove.enabled = false;
         HammerSpawner.enabled = false;
@@ -256,30 +237,26 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
 
-    IEnumerator SecondsDelay()
+    IEnumerator SecDelay()
     {
         Time.timeScale = 0f;
-        float realTimeToUnpause = Time.realtimeSinceStartup + 2;
+        float realTimeToUnpause = Time.realtimeSinceStartup + .5f;
 
         while (Time.realtimeSinceStartup < realTimeToUnpause)
         {
             yield return null;
         }
 
-        Time.timeScale = 1.0f;
+        Time.timeScale = 1f;
     }
+
 
     public void RemoveTime()
     {
-        StartCoroutine(SecondsDelay());   
+        StartCoroutine(SecDelay());   
     }
-
-    public void EnableAll()
-    {
-
-    }
-
 
     public void DestroyAllObstacles()
     {
