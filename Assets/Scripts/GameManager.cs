@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
     public void OnLevelWasLoaded()
     {
         MCMove.SpeedUp();
+        DancerSpawner.increaseDancer();
         MCMove.Reset();
         player.GetComponent<PlayerMovement>().Reset();
 
@@ -124,17 +125,14 @@ public class GameManager : MonoBehaviour
 
     void InitObstacles()
     {
+        DancerSpawner.Spawn();
+
         if (level >= levelProgression.Length)
         {
             return;
         }
 
         string currObstacle = levelProgression[level];
-        
-        if (level >= 2)
-        {
-            MCMove.enabled = true;
-        }
 
         if (currObstacle == "RocketSpawner")
         {
@@ -153,9 +151,6 @@ public class GameManager : MonoBehaviour
         {
             //PopperSpawner.active = true;
             PopperSpawner.enabled = true;
-        } else if (currObstacle == "BG Spawner")
-        {
-            DancerSpawner.Spawn();
         }
 
         RocketSpawner.IncreaseSpawnRate();
@@ -191,7 +186,6 @@ public class GameManager : MonoBehaviour
     {
         DisableAll();
         DestroyAllObstacles();
-        DestroyDancers();
         levelText.text = "YOU CAN'T TOUCH THIS";
                
 
@@ -269,24 +263,7 @@ public class GameManager : MonoBehaviour
 
         for (var i = 0; i < gameObjects.Length; i++)
         {
-            if (gameObjects[i].name != "BG Dancer(Clone)")
-            {
-                Destroy(gameObjects[i]);
-            }
-        }
-    }
-
-    
-    public void DestroyDancers()
-    {
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Obstacle");
-
-        for (var i = 0; i < gameObjects.Length; i++)
-        {
-            if (gameObjects[i].name == "BG Dancer(Clone)")
-            {
-                Destroy(gameObjects[i]);
-            }
+            Destroy(gameObjects[i]);
         }
     }
 }

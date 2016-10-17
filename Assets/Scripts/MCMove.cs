@@ -9,7 +9,10 @@ public class MCMove : MonoBehaviour
     int xdir, ydir, rand;
     public bool move;
     public float speed;
-    
+
+    private Vector2 min;
+    private Vector2 max;
+
     Vector2 destination;
     // Use this for initialization
     void Start()
@@ -17,6 +20,8 @@ public class MCMove : MonoBehaviour
         RandomDirection();
         this.enabled = false;
         speed = 0.01f;
+        min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
     }
 
     // Update is called once per frame
@@ -50,7 +55,7 @@ public class MCMove : MonoBehaviour
 
     public void Reset()
     {
-        transform.position = new Vector2(0, 2.5f);
+        transform.position = new Vector2(Random.Range(min.x, max.x), 2.5f);
     }
 
     public void SpeedUp()

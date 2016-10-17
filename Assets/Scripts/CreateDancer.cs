@@ -26,4 +26,12 @@ public class CreateDancer : MonoBehaviour {
             newBG.GetComponent<BGDancer>().gm = this.gm;
         }
     }
+
+    public void increaseDancer()
+    {
+        if (spawnMax < 5)
+        {
+            spawnMax += 1;
+        }
+    }
 }
