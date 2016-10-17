@@ -30,7 +30,7 @@ public class MCMove : MonoBehaviour
    {
         if (move)
         {
-            destination = new Vector2(transform.position.x + (xdir * speed), transform.position.y + (ydir * speed));
+            destination = new Vector2(transform.position.x + (xdir * speed * Screen.width / 80), transform.position.y + (ydir * speed * Screen.height / 50));
             while (destination.x < min.x || destination.x > max.x || destination.y < min.y || destination.y > max.y)
             {
                 Debug.Log("RandomDir Loop");
