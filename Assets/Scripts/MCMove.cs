@@ -35,7 +35,7 @@ public class MCMove : MonoBehaviour
             {
                 Debug.Log("RandomDir Loop");
                 RandomDirection();
-                destination = new Vector2(transform.position.x + (xdir * speed * 2), transform.position.y + (ydir * speed * 2));
+                destination = new Vector2(transform.position.x + (xdir * speed * 2 * Screen.width / 80), transform.position.y + (ydir * speed * 2 * Screen.height / 50));
             }
             transform.position = destination;
         }
