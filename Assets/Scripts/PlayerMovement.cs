@@ -5,9 +5,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameManager gm;
     public float speed = 3.0f;
-
+    MCMove mc;
     void Start()
     {
+        mc = GameObject.Find("MC Hammer").GetComponent<MCMove>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         Reset();
     }
@@ -69,10 +70,12 @@ public class PlayerMovement : MonoBehaviour
 
             if (collidedWith.name == "MC Hammer")
             {
+                mc.move = false;
                 gm.RemoveTime();
                 GetComponent<PlayerMovement>().enabled = false;
                 Invoke("LoadLevel", 1f);
                 StartCoroutine(SecondsDelay());
+                
             }
             else if (collidedWith.tag == "Obstacle")
             {
@@ -82,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
                 Invoke("FinishGame", 1);
                 StartCoroutine(SecondsDelay());
             }
+            
         }
     }
 }

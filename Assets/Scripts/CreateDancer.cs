@@ -7,6 +7,7 @@ public class CreateDancer : MonoBehaviour {
     public GameObject MCHammer;
     public int spawnMax = 1;
     public GameManager gm;
+    
 
     void Start()
     {

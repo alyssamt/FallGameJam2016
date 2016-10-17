@@ -86,16 +86,15 @@ public class GameManager : MonoBehaviour
     //This is called each time a scene is loaded.
     public void OnLevelWasLoaded()
     {
-
-        MCMove.TimeReset();
+        
         player.transform.position = new Vector3(0, -3, 0);
 
         //SCORE - score update
-
         scoreUITextGO.GetComponent<GameScore>().Score += (int)(winScore * Mathf.Pow(scoreRate, level));
 
         level++;
         InitGame();
+        
     }
 
     //Initializes the game for each level.
@@ -165,16 +164,19 @@ public class GameManager : MonoBehaviour
     //Hides black image used between levels
     void HideLevelImage()
     {
+        MCMove.Reset();
+        MCMove.move = true;
         //Disable the levelImage gameObject.
         levelImage.SetActive(false);
 
         //Set doingSetup to false allowing player to move again.
         doingSetup = false;
     }
-
+    
     //Update is called every frame.
     void Update()
     {
+        
         if (doingSetup)
             return;
         //SCORE - decrease score
@@ -259,7 +261,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SecondsDelay()
     {
+        MCMove.move = false;
         Time.timeScale = 0f;
+
         float realTimeToUnpause = Time.realtimeSinceStartup + 2;
 
         while (Time.realtimeSinceStartup < realTimeToUnpause)
@@ -268,6 +272,7 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 1.0f;
+        
     }
 
     public void RemoveTime()
