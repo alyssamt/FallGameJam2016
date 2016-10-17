@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Text levelText;                                 //Text to display current level number.
     private GameObject levelImage;                          //Image to block out level as levels are being set up, background for levelText.
     private GameObject playAgainButton;
+    private GameObject giveUpButton;
     private GameObject player;
     private GameObject mcHammer;
 
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         playAgainButton = GameObject.Find("PlayAgainButton");
+        giveUpButton = GameObject.Find("GiveUpButton");
 
         DancerSpawner = GameObject.Find("BG Spawner").GetComponent<CreateDancer>();
         HammerSpawner = GameObject.Find("HammerSpawner").GetComponent<HammerSpawn>();
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
 
         levelImage.SetActive(false);
         playAgainButton.SetActive(false);
+        giveUpButton.SetActive(false);
 
         level = 1;
         InitGame();
@@ -248,6 +251,7 @@ public class GameManager : MonoBehaviour
 
         levelImage.SetActive(true);
         playAgainButton.SetActive(true);
+        giveUpButton.SetActive(true);
     }
 
 
@@ -271,6 +275,7 @@ public class GameManager : MonoBehaviour
         level = 1;
         scoreUITextGO.GetComponent<GameScore>().Score = 0;
         playAgainButton.SetActive(false);
+        giveUpButton.SetActive(false);
         InitGame();
     }
 
@@ -324,5 +329,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObjects[i]);
         }
+    }
+
+    public void GiveUp()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

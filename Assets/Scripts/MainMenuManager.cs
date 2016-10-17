@@ -41,4 +41,9 @@ public class MainMenuManager : MonoBehaviour {
         CreditsPage.SetActive(false);
     }
 
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
 }
