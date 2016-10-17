@@ -4,18 +4,18 @@ using System.Collections;
 public class RocketSpawner : MonoBehaviour {
 
     public GameManager gm;
-    public GameObject RocketGO; //this is our enemy prefab
+    public GameObject RocketGO;
     public float maxSpawnRateInSeconds = 5f;
     public float spawnRate = 1f;
-    //public bool active;
+    public float maxSizeIncrease = 0;
 
-	// Use this for initialization
+
 	void Start () {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         this.enabled = false;
 	}
 
-    // Update is called once per frame
+
     void Update()
     {
         if (this.enabled && !gm.doingSetup)
@@ -33,13 +33,9 @@ public class RocketSpawner : MonoBehaviour {
     public void BeginSpawning()
     {
         Invoke("SpawnEnemy", 0);
-
-        //increase spawn rate every 30 seconds
-        //InvokeRepeating("IncreaseSpawnRate", 0f, 30f);
     }
 
 
-    //function to spawn an enemy
     void SpawnEnemy()
     {
         //this is the bottom-left point of the screen
@@ -52,30 +48,18 @@ public class RocketSpawner : MonoBehaviour {
         GameObject anEnemy = (GameObject)Instantiate(RocketGO);
         anEnemy.transform.position = new Vector2(Random.Range(min.x, max.x), max.y + 3.5f);
 
-        //schedule when to spawn next enemy
-        //ScheduleNextEnemySpawn();
+        float scaleNum = Random.Range(0, maxSizeIncrease);
+        anEnemy.transform.localScale += new Vector3(scaleNum, scaleNum, 0);
     }
 
     void ScheduleNextEnemySpawn()
     {
         if (!gm.doingSetup)
         {
-            /*
-            float spawnInNSeconds;
-
-            if (maxSpawnRateInSeconds > 1f)
-            {
-                //pick a number between 1 and maxSpawnRateInSeconds
-                spawnInNSeconds = Random.Range(1f, maxSpawnRateInSeconds);
-
-            }
-            else
-                spawnInNSeconds = 1f;
-                */
-
             Invoke("SpawnEnemy", Random.Range(1f, maxSpawnRateInSeconds));
         }
     }
+
 
     //function to increase the difficulty of the game
     //called from GameManager each level
@@ -86,6 +70,12 @@ public class RocketSpawner : MonoBehaviour {
 
         if (maxSpawnRateInSeconds == 1f)
             CancelInvoke("IncreaseSpawnRate");
+
+        //also increases SIZE :)
+        if (maxSizeIncrease <= 2)
+        {
+            maxSizeIncrease += 0.1f;
+        }
     }
 }
 
