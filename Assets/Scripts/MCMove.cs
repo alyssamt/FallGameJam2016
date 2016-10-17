@@ -59,4 +59,5 @@ public class MCMove : MonoBehaviour
         {
             speed += 0.0025f;
         }
+    }
 }
